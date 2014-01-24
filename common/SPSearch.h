@@ -40,8 +40,21 @@ static SInt32 const kSPSearchDefaultSearchPageSize = 75;
 /** The "do not search" page size. Used if you don't want to search for a particular kind of result. */
 static SInt32 const kSPSearchDoNotSearchPageSize = 0;
 
+@protocol SPSearchFetchDelegate <NSObject>
+
+- (void)searchDidReceiveNewAlbums:(SPSearch *)search;
+- (void)searchDidReceiveNewArtists:(SPSearch *)search;
+- (void)searchDidReceiveNewTracks:(SPSearch *)search;
+- (void)searchDidReceiveNewPlaylists:(SPSearch *)search;
+
+@end
+
+
 /** This class performs a search on the Spotify catalogue available to the given session, returning tracks, albums and artists. */
 @interface SPSearch : NSObject <SPAsyncLoading>
+
+
+@property (nonatomic, weak) id<SPSearchFetchDelegate> fetchDelegate;
 
 ///----------------------------
 /// @name Creating and Initializing Searches

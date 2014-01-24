@@ -151,7 +151,7 @@ void artistbrowse_complete(sp_artistbrowse *result, void *userdata) {
 			artistBrowse.portraits = newPortraits;
 			artistBrowse.topTracks = newTopTracks;
 			artistBrowse.loaded = isLoaded;
-		});
+        });
 	}
 }
 
@@ -230,6 +230,14 @@ void artistbrowse_complete(sp_artistbrowse *result, void *userdata) {
 	sp_artistbrowse *outgoing_browse = _artistBrowse;
 	_artistBrowse = NULL;
 	SPDispatchAsync(^() { if (outgoing_browse) sp_artistbrowse_release(outgoing_browse); });
+}
+
+- (void)setTracks:(NSArray *)n_tracks {
+    tracks = n_tracks;
+    
+    if ([_fetchDelegate respondsToSelector:@selector(artistBrowseDidReceiveNewTracks:)]) {
+        [_fetchDelegate artistBrowseDidReceiveNewTracks:self];
+    }
 }
 
 @end

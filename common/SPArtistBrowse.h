@@ -46,8 +46,17 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SPArtist;
 @class SPSession;
 @class SPImage;
+@class SPArtistBrowse;
+
+@protocol SPAritstBrowseFetchDelegate <NSObject>
+
+- (void)artistBrowseDidReceiveNewTracks:(SPArtistBrowse *)artistBrowse;
+
+@end
 
 @interface SPArtistBrowse : NSObject <SPAsyncLoading>
+
+@property (nonatomic, weak) id<SPAritstBrowseFetchDelegate> fetchDelegate;
 
 ///----------------------------
 /// @name Creating and Initializing Artist Browses

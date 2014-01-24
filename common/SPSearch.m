@@ -492,6 +492,66 @@ void search_complete(sp_search *result, void *userdata) {
 	
 }
 
+#pragma mark - setters
+
+- (void)setAlbums:(NSArray *)n_albums {
+    albums = n_albums;
+    if (albums) {
+        [self notifyFetchDelegateAboutNewAlbums];
+    }
+}
+
+- (void)setArtists:(NSArray *)n_artists {
+    artists = n_artists;
+    
+    if (artists) {
+        [self notifyFetchDelegateAboutNewArtists];
+    }
+}
+
+- (void)setTracks:(NSArray *)n_tracks {
+    tracks = n_tracks;
+    
+    if (tracks) {
+        [self notifyFetchDelegateAboutNewTracks];
+    }
+}
+
+- (void)setPlaylists:(NSArray *)n_playlists {
+    playlists = n_playlists;
+    
+    if (playlists) {
+        [self notifyFetchDelegateAboutNewPlaylists];
+    }
+}
+
+
+#pragma mark - Fetch Delegate
+
+- (void)notifyFetchDelegateAboutNewAlbums {
+    if ([_fetchDelegate respondsToSelector:@selector(searchDidReceiveNewAlbums:)]) {
+        [_fetchDelegate searchDidReceiveNewAlbums:self];
+    }
+}
+
+- (void)notifyFetchDelegateAboutNewArtists {
+    if ([_fetchDelegate respondsToSelector:@selector(searchDidReceiveNewArtists:)]) {
+        [_fetchDelegate searchDidReceiveNewArtists:self];
+    }
+}
+
+- (void)notifyFetchDelegateAboutNewTracks {
+    if ([_fetchDelegate respondsToSelector:@selector(searchDidReceiveNewTracks:)]) {
+        [_fetchDelegate searchDidReceiveNewTracks:self];
+    }
+}
+
+- (void)notifyFetchDelegateAboutNewPlaylists {
+    if ([_fetchDelegate respondsToSelector:@selector(searchDidReceiveNewPlaylists:)]) {
+        [_fetchDelegate searchDidReceiveNewPlaylists:self];
+    }
+}
+
 #pragma mark -
 
 -(void)dealloc {
